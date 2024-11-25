@@ -1,0 +1,1 @@
+{"name":"Local: firstOfPersing","url":"d:\\Git\\AHZ\\firstOfPersing.cpp","tests":[{"id":1732177244195,"input":"1\n9\nE T\nE F'\nE' +TE\nE' ~\nT FT'\nT' *FT\nT' ~\nF id\nF (E)","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Git\\AHZ\\firstOfPersing.cpp","group":"local","local":true}
