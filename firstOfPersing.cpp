@@ -272,7 +272,7 @@ void printRecursive(const str &key)
     if (nonTerminal.find(key) != nonTerminal.end())
     {
         if (cnt == 0)
-            cout << key << ": { "; // only in 1st time
+            cout << key << ": { ";
 
         for (const str &value : nonTerminal[key])
         {
@@ -293,23 +293,11 @@ void printRecursive(const str &key)
         }
 
         if (cnt == 0)
-            cout << "}"; /// only in last time
+            cout << "}";
     }
     else
         cout << key;
-}
 
-void printAllRecursive()
-{
-    cout << "Recursive Output of Non-Terminal Map:" << endl;
-    for (const auto &entry : nonTerminal)
-    {
-        visited.clear();
-        printRecursive(entry.ff);
-        EL;
-    }
-
-    nonTerminal.clear();
     return;
 }
 
@@ -327,7 +315,17 @@ void solve()
 
         nonTerminal[s].push_back(s2);
     }
-    printAllRecursive();
+
+    cout << "Map:" << endl;
+    for (const auto &entry : nonTerminal)
+    {
+        visited.clear();
+        printRecursive(entry.ff);
+        EL;
+    }
+
+    nonTerminal.clear();
+    return;
 }
 int main()
 {
