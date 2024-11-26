@@ -255,52 +255,80 @@ inline void rsortin(T &a)
 
 // ll s(ll x, ll xt, ll y, ll yt)
 // {    return (x - xt) * (x - xt) + (y - yt) * (y - yt);}
-
 map<str, vector<str>> nonTerminal;
-void solve()
+set<str> visited;
+int cnt = 0;
+void printRecursive(const str &key)
 {
-    /// First
-    cout << "How many grammer do you have? \n answer => ";
-    int n, x;
-    str s, s2;
-    map<str,str> Terminal;
 
-    cin >> n;
-
-    while (n--)
+    if (visited.count(key))
     {
-        int ter;
-        cout << "is it terminal if(1==yes) \n => ";
-        cin>>ter;
-    
-        cout << "Grammer (S -> id) \n => ";
-        cin >> s >> s2,
-            nonTerminal[s].pb(s2);
-
-        if(ter==1){
-            Terminal[s]+= ", " + s2;
-        }
+        // cout << key << " (cycle detected)";
+        return;
     }
 
-    cout << "List of nonTerminal ";
-    EL;
+    visited.insert(key);
 
-    for (const auto &i : nonTerminal)
+    if (nonTerminal.find(key) != nonTerminal.end())
     {
-        cout << i.ff << ": {";
-        for (const auto &j : i.ss)
-            if (nonTerminal.find(j) != nonTerminal.end())
-                cout << "func,";
-            else
-                cout << j[0] << ", ";
+        if (cnt == 0)
+            cout << key << ": { "; // only in 1st time
 
-        cout << "}" << endl;
+        for (const str &value : nonTerminal[key])
+        {
+            if (value == "id")
+            {
+                cout << value << ", ";
+                continue;
+            }
+
+            str firstChar(1, value[0]);
+            if (nonTerminal.find(firstChar) != nonTerminal.end())
+            {
+                cnt++;
+                printRecursive(firstChar), cnt--;
+            }
+            else
+                cout << firstChar << ", ";
+        }
+
+        if (cnt == 0)
+            cout << "}"; /// only in last time
+    }
+    else
+        cout << key;
+}
+
+void printAllRecursive()
+{
+    cout << "Recursive Output of Non-Terminal Map:" << endl;
+    for (const auto &entry : nonTerminal)
+    {
+        visited.clear();
+        printRecursive(entry.ff);
+        EL;
     }
 
     nonTerminal.clear();
     return;
 }
 
+void solve()
+{
+    cout << "How many grammar rules do you have? \n answer => ";
+    int n;
+    str s, s2;
+    cin >> n;
+
+    while (n--)
+    {
+        // cout << "Grammar (S -> id) \n => ";
+        cin >> s >> s2;
+
+        nonTerminal[s].push_back(s2);
+    }
+    printAllRecursive();
+}
 int main()
 {
     ios_base::sync_with_stdio(false);
